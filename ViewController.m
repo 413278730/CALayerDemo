@@ -16,7 +16,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     CALayer *layer = [CALayer layer];
-    layer.frame = CGRectMake(100, 100, 200, 100);
+    layer.frame = CGRectMake(100, 100, 100, 100);
     layer.contents = (__bridge id)[UIImage imageNamed:@"timg.jpeg"].CGImage;
     layer.contentsGravity = kCAGravityResizeAspectFill;
     layer.contentsScale = [UIScreen mainScreen].scale;
@@ -26,12 +26,22 @@
     layer.magnificationFilter = kCAFilterTrilinear;
     layer.rasterizationScale = [UIScreen mainScreen].scale;
     layer.shouldRasterize = YES;
-    layer.delegate = self;
     [self.view.layer addSublayer:layer];
+    
+    CALayer *blueLayer = [CALayer layer];
+    blueLayer.frame = CGRectMake(100, 250, 100, 100);
+    blueLayer.backgroundColor = [UIColor blueColor].CGColor;
+    blueLayer.delegate = self;
+    blueLayer.contentsScale = [UIScreen mainScreen].scale;
+    [self.view.layer addSublayer:blueLayer];
+    [blueLayer display];
+
 }
 
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
-    
+    CGContextSetLineWidth(ctx, 10.0f);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
+    CGContextStrokeEllipseInRect(ctx, layer.bounds);
 }
 
 @end
